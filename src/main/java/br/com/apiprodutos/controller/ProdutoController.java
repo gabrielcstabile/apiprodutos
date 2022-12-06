@@ -4,10 +4,7 @@ import br.com.apiprodutos.entity.Produto;
 import br.com.apiprodutos.service.ProdutoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,9 +23,16 @@ public class ProdutoController {
         return ResponseEntity.ok(produtoService.buscarTodos());
     }
 
+    @PostMapping
     public ResponseEntity <Produto> salvar(@RequestBody Produto produto){
         var novoProduto = produtoService.salvar(produto);
         return new ResponseEntity(produto, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping ("/{id}")
+    public ResponseEntity <Void> excluir (@PathVariable Long id){
+        produtoService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
 
